@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/entrar',
+        redirectTo: 'tab1',
         pathMatch: 'full'
       }
     ]
@@ -38,6 +38,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/entrar',
     pathMatch: 'full'
+  },
+  {
+    path: 'entrar',
+    loadChildren: () => import('../entrar/entrar.module').then(m => m.EntrarPageModule)
   }
 ];
 

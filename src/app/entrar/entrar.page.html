@@ -1,5 +1,8 @@
 <ion-header [translucent]="true"> </ion-header>
+
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
   .container {
     display: flex;
     flex-direction: column;
@@ -7,9 +10,9 @@
     align-items: center;
     height: 100%;
     padding: 16px;
-    background-image: url("/assets/background/background1.jpg");
+    background-color: #f8f8f8; /* Cor de fundo clara */
     background-size: cover;
-    font-family: Arial, sans-serif;
+    font-family: "Roboto", Arial, sans-serif;
   }
 
   .logo {
@@ -22,38 +25,49 @@
     width: 100%;
     max-width: 400px;
     margin-bottom: 16px;
+    --background: transparent;
+  }
+
+  ion-input {
+    --padding-start: 0px;
   }
 
   ion-button {
     width: 100%;
     max-width: 400px;
     margin-top: 16px;
+    --background: #ff5722; /* Cor laranja */
+    --background-hover: #e64a19;
+    --background-activated: #d84315;
   }
 
   .register-link {
-    margin-top: 400px;
+    margin-top: 16px;
     font-size: 14px;
     color: #888;
+    text-align: center;
   }
 
   .eucompro {
-    font-size: 24px;
+    font-size: 48px; /* Tamanho do texto maior para o título */
     font-weight: bold;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    margin-top: -40px; /* Ajusta a posição para cima */
     text-align: center;
+    color: #000;
   }
 </style>
 
 <ion-content>
   <div class="container">
-    <p class="">EuCompro</p>
+    <p class="eucompro">EUCOMPRO</p>
     <ion-item>
       <ion-input placeholder="Email" type="email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-input placeholder="Palavra-passe" type="password"></ion-input>
     </ion-item>
-    <ion-button expand="block">Entrar</ion-button>
-    <p class="register-link">Não tens conta?</p>
+    <ion-button expand="block" routerLink="/tabs/tab1">Entrar</ion-button>
+    <p class="register-link" routerLink="/criarconta">Não tens conta?</p>
   </div>
 </ion-content>

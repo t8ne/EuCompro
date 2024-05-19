@@ -25,6 +25,42 @@ const routes: Routes = [
   {
     path: 'entrar',
     loadChildren: () => import('./entrar/entrar.module').then( m => m.EntrarPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'conta',
+    loadChildren: () => import('./conta/conta.module').then( m => m.ContaPageModule)
+  },
+  {
+    path: 'transacoes',
+    loadChildren: () => import('./transacoes/transacoes.module').then( m => m.TransacoesPageModule)
+  },
+  {
+    path: 'locais',
+    loadChildren: () => import('./locais/locais.module').then( m => m.LocaisPageModule)
+  },
+  {
+    path: 'notificacoes',
+    loadChildren: () => import('./notificacoes/notificacoes.module').then( m => m.NotificacoesPageModule)
+  },
+  {
+    path: 'permissoes',
+    loadChildren: () => import('./permissoes/permissoes.module').then( m => m.PermissoesPageModule)
+  },
+  {
+    path: 'linguagem',
+    loadChildren: () => import('./linguagem/linguagem.module').then( m => m.LinguagemPageModule)
+  },
+  {
+    path: 'desativar-conta',
+    loadChildren: () => import('./desativar-conta/desativar-conta.module').then( m => m.DesativarContaPageModule)
+  },
+  {
+    path: 'documentacao-legal',
+    loadChildren: () => import('./documentacao-legal/documentacao-legal.module').then( m => m.DocumentacaoLegalPageModule)
   }
 ];
 @NgModule({
