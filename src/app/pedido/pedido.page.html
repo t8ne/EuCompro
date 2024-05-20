@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--border-width: 0">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="pedido-message">
+    <p>
+      O seu pedido está a ser processado. Irá receber uma notificação quando
+      alguém o confirmar para entrega.
+    </p>
+  </div>
+</ion-content>
+
+<style>
+  .pedido-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    font-size: 1.2em;
+    color: gray;
+  }
+</style>

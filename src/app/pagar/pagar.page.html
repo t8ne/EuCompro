@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--border-width: 0">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab2"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Pagamento</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="payment-options">
+        <ion-scroll scrollX="true">
+          <ion-row>
+            <ion-col>
+              <img src="assets/shop-pay.png" alt="Shop Pay" />
+            </ion-col>
+            <ion-col>
+              <img src="assets/google-pay.png" alt="Google Pay" />
+            </ion-col>
+            <ion-col>
+              <img src="assets/apple-pay.png" alt="Apple Pay" />
+            </ion-col>
+          </ion-row>
+        </ion-scroll>
+      </div>
+      <ion-item>
+        <ion-label position="floating">Primeiro Nome</ion-label>
+        <ion-input [(ngModel)]="firstName" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Último Nome</ion-label>
+        <ion-input [(ngModel)]="lastName" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Endereço Linha 1</ion-label>
+        <ion-input [(ngModel)]="addressLine1" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Endereço Linha 2</ion-label>
+        <ion-input [(ngModel)]="addressLine2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Cidade</ion-label>
+        <ion-input [(ngModel)]="city" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Código Postal</ion-label>
+        <ion-input [(ngModel)]="postalCode" required></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="submitProposal()"
+        >Enviar Proposta</ion-button
+      >
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<style>
+  .payment-options {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    overflow-x: auto;
+  }
+
+  .payment-options img {
+    height: 40px;
+    margin: 0 10px;
+  }
+
+  ion-card-title,
+  ion-card-subtitle {
+    text-align: center;
+  }
+
+  ion-item {
+    --background: #f9f9f9;
+    border-radius: 10px;
+    margin: 10px 0;
+  }
+
+  ion-button {
+    margin-top: 20px;
+  }
+</style>
