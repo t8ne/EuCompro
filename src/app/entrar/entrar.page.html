@@ -75,7 +75,7 @@
         [(ngModel)]="email"
       ></ion-input>
     </ion-item>
-    <div *ngIf="emailError" class="error-message">{{ emailErrorMessage }}</div>
+    <div *ngIf="emailError" class="error-message">{{ emailError }}</div>
     <ion-item>
       <ion-input
         placeholder="Palavra-passe"
@@ -83,9 +83,7 @@
         [(ngModel)]="password"
       ></ion-input>
     </ion-item>
-    <div *ngIf="passwordError" class="error-message">
-      {{ passwordErrorMessage }}
-    </div>
+    <div *ngIf="passwordError" class="error-message">{{ passwordError }}</div>
     <ion-button expand="block" (click)="login()">Entrar</ion-button>
     <p class="register-link" routerLink="/criarconta">Não tens conta?</p>
   </div>

@@ -51,4 +51,19 @@
       Documentação Legal
     </ion-item>
   </ion-list>
+
+  <div class="logout-button-container">
+    <ion-button expand="block" color="danger" (click)="confirmLogout()"
+      >Sair</ion-button
+    >
+  </div>
 </ion-content>
+
+<style>
+  .logout-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+  }
+</style>

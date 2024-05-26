@@ -11,10 +11,8 @@ import { ToastController } from '@ionic/angular';
 export class EntrarPage {
   email: string = '';
   password: string = '';
-  emailError: boolean = false;
-  passwordError: boolean = false;
-  emailErrorMessage: string = '';
-  passwordErrorMessage: string = '';
+  emailError: string = '';
+  passwordError: string = '';
 
   constructor(
     private authService: AuthService,
@@ -26,14 +24,12 @@ export class EntrarPage {
     this.resetErrors();
 
     if (!this.email) {
-      this.emailError = true;
-      this.emailErrorMessage = 'Por favor digite um Email.';
+      this.emailError = 'Por favor digite um Email.';
       return;
     }
 
     if (!this.password) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'Palavra-passe não introduzida.';
+      this.passwordError = 'Palavra-passe não introduzida.';
       return;
     }
 
@@ -41,46 +37,24 @@ export class EntrarPage {
       await this.authService.login(this.email, this.password);
       this.router.navigate(['/tabs/tab1']);
     } catch (error: any) {
-      this.handleAuthError(error);
-    }
-  }
-
-  handleAuthError(error: any) {
-    if (this.isFirebaseAuthError(error)) {
-      switch (error.code) {
-        case 'auth/user-not-found':
-          this.emailError = true;
-          this.emailErrorMessage = 'Email não registado.';
-          this.clearPasswordForm();
-          break;
-        case 'auth/wrong-password':
-        case 'auth/invalid-credential':
-          this.passwordError = true;
-          this.passwordErrorMessage = 'Palavra-passe incorreta.';
-          this.clearPasswordForm();
-          break;
-        case 'auth/invalid-email':
-          this.emailError = true;
-          this.emailErrorMessage = 'Formato de Email não reconhecido.';
-          this.clearPasswordForm();
-          break;
-        default:
-          this.showToast('Erro ao fazer login. Por favor, tente novamente.');
+      if (error.message === 'auth/user-not-found') {
+        this.emailError = 'Email não registado.';
+        this.password = '';
+      } else if (error.message === 'auth/wrong-password') {
+        this.passwordError = 'Palavra-passe incorreta.';
+        this.password = '';
+      } else if (error.message === 'auth/invalid-email') {
+        this.emailError = 'Formato de Email não reconhecido.';
+        this.password = '';
+      } else {
+        this.showToast('Erro ao fazer login. Por favor, tente novamente.');
       }
-    } else {
-      this.showToast('Erro ao fazer login. Por favor, tente novamente.');
     }
   }
 
   resetErrors() {
-    this.emailError = false;
-    this.passwordError = false;
-    this.emailErrorMessage = '';
-    this.passwordErrorMessage = '';
-  }
-
-  clearPasswordForm() {
-    this.password = '';
+    this.emailError = '';
+    this.passwordError = '';
   }
 
   async showToast(message: string) {

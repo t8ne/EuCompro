@@ -8,6 +8,34 @@
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar> </ion-toolbar>
+    <ion-toolbar></ion-toolbar>
   </ion-header>
+
+  <div class="container">
+    <p>
+      Ao desativar a sua conta, todos os seus dados e informações associadas
+      serão permanentemente apagados. Esta ação é irreversível e não será
+      possível recuperar qualquer dado após a desativação.
+    </p>
+    <p>
+      Por favor, tenha certeza de que deseja continuar com a desativação da sua
+      conta. Se o fizer, perderá o acesso a todos os serviços e funcionalidades
+      oferecidos pela nossa plataforma.
+    </p>
+    <ion-button
+      expand="block"
+      color="danger"
+      (click)="confirmDeactivation()"
+      style="margin-top: 50px"
+    >
+      Desativar Conta
+    </ion-button>
+  </div>
 </ion-content>
+
+<style>
+  .container {
+    padding: 16px;
+    text-align: center;
+  }
+</style>
