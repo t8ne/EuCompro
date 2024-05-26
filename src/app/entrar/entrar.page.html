@@ -1,4 +1,4 @@
-<ion-header [translucent]="true"></ion-header>
+<ion-header [translucent]="true"> </ion-header>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
@@ -62,7 +62,6 @@
     font-size: 0.8em;
     margin-top: -10px;
     margin-bottom: 10px;
-    text-align: center;
   }
 </style>
 
@@ -76,7 +75,7 @@
         [(ngModel)]="email"
       ></ion-input>
     </ion-item>
-    <div *ngIf="emailError" class="error-message">Email não registado.</div>
+    <div *ngIf="emailError" class="error-message">{{ emailErrorMessage }}</div>
     <ion-item>
       <ion-input
         placeholder="Palavra-passe"
@@ -85,7 +84,7 @@
       ></ion-input>
     </ion-item>
     <div *ngIf="passwordError" class="error-message">
-      Palavra-passe incorreta.
+      {{ passwordErrorMessage }}
     </div>
     <ion-button expand="block" (click)="login()">Entrar</ion-button>
     <p class="register-link" routerLink="/criarconta">Não tens conta?</p>

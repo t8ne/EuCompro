@@ -6,31 +6,6 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="container">
-    <ion-item>
-      <ion-input placeholder="Nome" type="text" [(ngModel)]="name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input
-        placeholder="Email"
-        type="email"
-        [(ngModel)]="email"
-      ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input
-        placeholder="Palavra-passe"
-        type="password"
-        [(ngModel)]="password"
-      ></ion-input>
-    </ion-item>
-    <ion-button expand="block" (click)="createAccount()"
-      >Criar Conta</ion-button
-    >
-  </div>
-</ion-content>
-
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
@@ -65,4 +40,40 @@
     --background-hover: #e64a19;
     --background-activated: #d84315;
   }
+
+  .error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
 </style>
+
+<ion-content>
+  <div class="container">
+    <ion-item>
+      <ion-input placeholder="Nome" type="text" [(ngModel)]="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        placeholder="Email"
+        type="email"
+        [(ngModel)]="email"
+      ></ion-input>
+    </ion-item>
+    <div *ngIf="emailError" class="error-message">{{ emailErrorMessage }}</div>
+    <ion-item>
+      <ion-input
+        placeholder="Palavra-passe"
+        type="password"
+        [(ngModel)]="password"
+      ></ion-input>
+    </ion-item>
+    <div *ngIf="passwordError" class="error-message">
+      {{ passwordErrorMessage }}
+    </div>
+    <ion-button expand="block" (click)="createAccount()"
+      >Criar Conta</ion-button
+    >
+  </div>
+</ion-content>
