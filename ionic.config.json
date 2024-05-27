@@ -1,7 +1,8 @@
 {
   "name": "EuCompro",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }
