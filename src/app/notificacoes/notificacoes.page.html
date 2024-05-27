@@ -19,4 +19,13 @@
   >
     Notificações Recentes
   </p>
+
+  <ion-list>
+    <ion-item *ngFor="let notificacao of notificacoes">
+      <ion-label>
+        <p>{{ notificacao.message }}</p>
+        <p>{{ notificacao.timestamp.toDate() | date: 'short' }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { ToastController } from '@ionic/angular';
 import { TransacaoService } from '../services/transacao.service';
+import { ListService } from '../services/list.service'; // Add this line
 
 @Component({
   selector: 'app-pagar',
@@ -23,22 +24,23 @@ export class PagarPage implements OnInit {
   postalCodeError: boolean = false;
   subtotal: number = 0;
   listId: string | null = null;
-  listName: string | null = null; // Add this line
+  listName: string | null = null; 
 
   constructor(
     private router: Router,
     private toastController: ToastController,
     private storageService: StorageService,
-    private transacaoService: TransacaoService
+    private transacaoService: TransacaoService,
+    private listService: ListService // Add this line
   ) {}
 
   async ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { subtotal: number, listId: string, listName: string }; // Add listName here
+    const state = navigation?.extras.state as { subtotal: number, listId: string, listName: string }; 
     if (state) {
       this.subtotal = state.subtotal;
       this.listId = state.listId;
-      this.listName = state.listName; // Add this line
+      this.listName = state.listName; 
     }
 
     this.firstName = await this.storageService.get('firstName') || '';
@@ -73,8 +75,10 @@ export class PagarPage implements OnInit {
     }
 
     if (!this.firstNameError && !this.lastNameError && !this.addressLine1Error && !this.cityError && !this.postalCodeError) {
-      if (this.listId && this.listName) { // Check for listName
+      if (this.listId && this.listName) { 
         this.transacaoService.addTransacao({ listId: this.listId, subtotal: this.subtotal, name: this.listName });
+        await this.listService.createNotificacao(`Pedido de Entrega de Lista aceite.`);
+        await this.listService.createNotificacao(`Lista "${this.listName}" confirmada para entrega. Tempo esperado: 20 minutos.`);
       }
       this.router.navigate(['/pedido'], { state: { listId: this.listId } });
     }

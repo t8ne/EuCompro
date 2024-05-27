@@ -88,4 +88,28 @@ export class ListService {
     });
     await batch.commit();
   }
+
+  async getNotificacoes(): Promise<any[]> {
+    const userId = await this.authService.getCurrentUserId();
+    if (!userId) {
+      throw new Error('User not authenticated');
+    }
+    const notificacoesSnapshot = await this.firestore.collection(`users/${userId}/notificacoes`).get().toPromise();
+    if (!notificacoesSnapshot) {
+      return [];
+    }
+    return notificacoesSnapshot.docs.map(doc => {
+      const data = doc.data() as Record<string, any>; // Ensure data is treated as an object
+      return { id: doc.id, ...data };
+    });
+  }
+
+  async createNotificacao(message: string): Promise<void> {
+    const userId = await this.authService.getCurrentUserId();
+    if (!userId) {
+      throw new Error('User not authenticated');
+    }
+    const timestamp = new Date();
+    await this.firestore.collection(`users/${userId}/notificacoes`).add({ message, timestamp });
+  }
 }

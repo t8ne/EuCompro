@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ListService } from '../services/list.service';
 
 @Component({
   selector: 'app-notificacoes',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./notificacoes.page.scss'],
 })
 export class NotificacoesPage implements OnInit {
+  notificacoes: any[] = [];
 
-  constructor() { }
+  constructor(private listService: ListService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.notificacoes = await this.listService.getNotificacoes();
   }
-
 }
