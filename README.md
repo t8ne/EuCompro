@@ -10,9 +10,9 @@ Certifique-se de ter o Node.js e o npm instalados. Pode baixá-los e instalá-lo
 
 1. **Fazer Clone ao Repositório**
 
-   ```bash
-   git clone https://github.com/t8ne/EuCompro
-   ```
+```bash
+git clone https://github.com/t8ne/EuCompro
+```
 
 2. **Clone the Repository**
 
