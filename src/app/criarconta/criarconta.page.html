@@ -47,6 +47,14 @@
     margin-top: -10px;
     margin-bottom: 10px;
   }
+
+  .info-message {
+    color: rgb(144, 144, 144);
+    font-size: 14px;
+    text-align: center;
+    margin-top: 23px;
+    font-weight: bold;
+  }
 </style>
 
 <ion-content>
@@ -75,5 +83,9 @@
     <ion-button expand="block" (click)="createAccount()"
       >Criar Conta</ion-button
     >
+    <div class="info-message">
+      Se ao carregar no botão "Criar Conta" nenhum erro aparecer porém não
+      entrar na aplicação, o seu email já está a ser utilizado.
+    </div>
   </div>
 </ion-content>

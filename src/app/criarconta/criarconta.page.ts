@@ -38,6 +38,20 @@ export class CriarContaPage {
       return;
     }
 
+    if (this.password.length < 6) {
+      this.passwordError = true;
+      this.passwordErrorMessage = 'Palavra-passe tem que ser maior que 6 caracteres.';
+      this.clearPasswordForm();
+      return;
+    }
+
+    if (!this.validateEmail(this.email)) {
+      this.emailError = true;
+      this.emailErrorMessage = 'Formato de email inválido.';
+      this.clearForms();
+      return;
+    }
+
     try {
       const user = await this.authService.register(this.email, this.password);
       this.showToast('Conta criada com sucesso!');
@@ -47,23 +61,29 @@ export class CriarContaPage {
     }
   }
 
+  validateEmail(email: string): boolean {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
+
   handleAuthError(error: any) {
     if (this.isFirebaseAuthError(error)) {
+      console.log('Firebase Auth Error:', error.code); // Added logging for error code
       switch (error.code) {
         case 'auth/email-already-in-use':
           this.emailError = true;
           this.emailErrorMessage = 'Email já registado.';
-          this.clearPasswordForm();
+          this.clearForms();
           break;
         case 'auth/weak-password':
           this.passwordError = true;
-          this.passwordErrorMessage = 'Palavra-passe menor do que 6 caracteres.';
+          this.passwordErrorMessage = 'Palavra-passe tem que ser maior que 6 caracteres.';
           this.clearPasswordForm();
           break;
         case 'auth/invalid-email':
           this.emailError = true;
-          this.emailErrorMessage = 'Formato de Email não reconhecido.';
-          this.clearPasswordForm();
+          this.emailErrorMessage = 'Formato de email inválido.';
+          this.clearForms();
           break;
         default:
           this.showToast('Erro ao criar a conta. Por favor, tente novamente.');
@@ -78,6 +98,11 @@ export class CriarContaPage {
     this.passwordError = false;
     this.emailErrorMessage = '';
     this.passwordErrorMessage = '';
+  }
+
+  clearForms() {
+    this.email = '';
+    this.password = '';
   }
 
   clearPasswordForm() {

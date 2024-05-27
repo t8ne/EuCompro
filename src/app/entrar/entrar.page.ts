@@ -33,19 +33,30 @@ export class EntrarPage {
       return;
     }
 
+    if (this.password.length < 6) {
+      this.passwordError = 'Palavra-passe demasiado pequena.';
+      this.password = '';
+      return;
+    }
+
     try {
       await this.authService.login(this.email, this.password);
       this.router.navigate(['/tabs/tab1']);
     } catch (error: any) {
-      if (error.message === 'auth/user-not-found') {
-        this.emailError = 'Email não registado.';
-        this.password = '';
-      } else if (error.message === 'auth/wrong-password') {
-        this.passwordError = 'Palavra-passe incorreta.';
-        this.password = '';
-      } else if (error.message === 'auth/invalid-email') {
-        this.emailError = 'Formato de Email não reconhecido.';
-        this.password = '';
+      if (this.isFirebaseAuthError(error)) {
+        if (error.code === 'auth/user-not-found') {
+          this.emailError = 'Email não registado.';
+          this.email = '';
+          this.password = '';
+        } else if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+          this.passwordError = 'Palavra-passe incorreta.';
+          this.password = '';
+        } else if (error.code === 'auth/invalid-email') {
+          this.emailError = 'Formato de Email não reconhecido.';
+          this.password = '';
+        } else {
+          this.showToast('Erro ao fazer login. Por favor, tente novamente.');
+        }
       } else {
         this.showToast('Erro ao fazer login. Por favor, tente novamente.');
       }
