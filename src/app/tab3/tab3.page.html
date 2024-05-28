@@ -55,28 +55,41 @@
   </div>
 
   <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
-    <div class="modal-wrapper">
-      <h3>Adicionar Produto?</h3>
-      <img
-        [src]="selectedProduct?.image"
-        alt="{{ selectedProduct?.name }}"
-        class="product-image"
-      />
-      <h4>
-        {{ selectedProduct?.name }} <span>({{ selectedProduct?.preco }})</span>
-      </h4>
-      <p>Supermercado: {{ selectedProduct?.supermercado }}</p>
-      <p>Quantidade: x{{ selectedProduct?.quantity }}</p>
-      <ion-select [(ngModel)]="selectedList">
-        <ion-select-option *ngFor="let list of lists" [value]="list?.id"
-          >{{ list?.name }}</ion-select-option
-        >
-      </ion-select>
-      <div class="modal-buttons">
-        <ion-button color="success" (click)="addProductToList()">✔</ion-button>
-        <ion-button color="danger" (click)="closeModal()">✖</ion-button>
+    <ng-template>
+      <div class="modal-wrapper">
+        <h3>Adicionar Produto?</h3>
+        <img
+          [src]="selectedProduct?.image"
+          alt="{{ selectedProduct?.name }}"
+          class="product-image"
+        />
+        <h4>
+          {{ selectedProduct?.name }}
+          <span>({{ selectedProduct?.preco }})</span>
+        </h4>
+        <p>Supermercado: {{ selectedProduct?.supermercado }}</p>
+        <p>
+          Quantidade:
+          <ion-input
+            type="number"
+            min="1"
+            [(ngModel)]="selectedProduct.quantity"
+          ></ion-input>
+        </p>
+        <p>Lista:</p>
+        <ion-select [(ngModel)]="selectedList">
+          <ion-select-option *ngFor="let list of lists" [value]="list.id">
+            {{ list.name }}
+          </ion-select-option>
+        </ion-select>
+        <div class="modal-buttons">
+          <ion-button color="success" (click)="addProductToList()"
+            >✔</ion-button
+          >
+          <ion-button color="danger" (click)="closeModal()">✖</ion-button>
+        </div>
       </div>
-    </div>
+    </ng-template>
   </ion-modal>
 </ion-content>
 

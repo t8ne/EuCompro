@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ModalController } from '@ionic/angular';
 import { ListService } from '../services/list.service';
 
 @Component({
@@ -21,8 +20,7 @@ export class Tab3Page implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private listService: ListService,
-    private modalCtrl: ModalController
+    private listService: ListService
   ) {}
 
   ngOnInit() {
@@ -30,7 +28,12 @@ export class Tab3Page implements OnInit {
   }
 
   async loadLists() {
-    this.lists = await this.listService.getLists();
+    try {
+      this.lists = await this.listService.getLists();
+      console.log('Lists loaded:', this.lists); // Debugging line to check if lists are loaded
+    } catch (error) {
+      console.error('Error loading lists:', error);
+    }
   }
 
   filterItems(event: any) {
@@ -38,28 +41,23 @@ export class Tab3Page implements OnInit {
 
     if (searchTerm && searchTerm.trim() !== '') {
       this.http.get<any[]>('assets/produtos.json').subscribe((data: any[]) => {
-        // Normalize os nomes dos produtos para comparação
         const normalizedData = data.map(item => ({
           ...item,
           normalizedName: this.normalizeString(item.name.toLowerCase())
         }));
 
-        // Primeiro, encontre itens que começam com o termo de pesquisa
         let startsWith = normalizedData.filter((item: any) =>
           item.normalizedName.startsWith(searchTerm)
         );
 
-        // Em seguida, encontre itens que contêm o termo de pesquisa, mas não começam com ele
         let contains = normalizedData.filter((item: any) =>
           item.normalizedName.includes(searchTerm) &&
           !item.normalizedName.startsWith(searchTerm)
         );
 
-        // Combine os dois arrays, com os itens que começam com o termo primeiro
         this.searchResults = startsWith.concat(contains).slice(0, 5);
       });
 
-      // Redefine o estado do produto selecionado e a exibição da grade
       this.selectedProduct = null;
       this.showGrid = false;
     } else {
@@ -85,8 +83,8 @@ export class Tab3Page implements OnInit {
   }
 
   async showProductDetails(product: any) {
-    this.selectedProduct = product;
-    this.lists = await this.listService.getLists();
+    this.selectedProduct = { ...product, quantity: 1 }; // Default quantity to 1
+    await this.loadLists(); // Ensure lists are loaded before showing modal
     this.isModalOpen = true;
   }
 
@@ -94,8 +92,8 @@ export class Tab3Page implements OnInit {
     if (this.selectedList && this.selectedProduct) {
       await this.listService.addItemToList(this.selectedList, {
         name: this.selectedProduct.name,
-        preco: this.selectedProduct.preco, // Adiciona o preço do produto
-        quantity: 1, // Adiciona quantidade padrão
+        preco: this.selectedProduct.preco,
+        quantity: this.selectedProduct.quantity,
       });
       this.isModalOpen = false;
     }
