@@ -31,5 +31,5 @@ npm install -g @ionic/cli @angular/cli cordova-res
   npm install @ionic-native/core
   npm install @angular/common/http
   npm install @ionic-native/splash-screen @ionic-native/status-bar
-  ionic integrations enable cordova
+  npm install @capacitor-mlkit/barcode-scanning
   ```
