@@ -9,7 +9,263 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar> </ion-toolbar>
-  </ion-header>
+  <!-- First Category Scroll -->
+  <div class="category-scroll">
+    <ion-segment
+      [(ngModel)]="selectedCategory1"
+      (ionChange)="categoryChanged1($event)"
+      scrollable
+    >
+      <ion-segment-button
+        *ngFor="let category of halfCategories1"
+        [value]="category"
+        class="category-button"
+      >
+        <strong>{{ category }}</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div class="horizontal-scroll">
+    <div class="product-container" *ngFor="let product of filteredProducts1">
+      <ion-card
+        (click)="showProductDetails(product)"
+        style="margin-bottom: -20px"
+      >
+        <img
+          [src]="product.image"
+          alt="{{ product.name }}"
+          class="product-image"
+        />
+        <ion-card-header>
+          <ion-card-title>{{ product.name }}</ion-card-title>
+          <ion-card-subtitle style="color: red"
+            >OFERTA! - {{ product.preco }}€</ion-card-subtitle
+          >
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </div>
+
+  <!-- Second Category Scroll -->
+  <div class="category-scroll">
+    <ion-segment
+      [(ngModel)]="selectedCategory2"
+      (ionChange)="categoryChanged2($event)"
+      scrollable
+    >
+      <ion-segment-button
+        *ngFor="let category of halfCategories2"
+        [value]="category"
+        class="category-button"
+      >
+        <strong>{{ category }}</strong>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div class="horizontal-scroll">
+    <div class="product-container" *ngFor="let product of filteredProducts2">
+      <ion-card (click)="showProductDetails(product)">
+        <img
+          [src]="product.image"
+          alt="{{ product.name }}"
+          class="product-image"
+        />
+        <ion-card-header>
+          <ion-card-title>{{ product.name }}</ion-card-title>
+          <ion-card-subtitle style="color: red"
+            >OFERTA! - {{ product.preco }}€</ion-card-subtitle
+          >
+        </ion-card-header>
+      </ion-card>
+    </div>
+  </div>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <div class="modal-wrapper">
+        <h3 class="modal-title">Adicionar Produto?</h3>
+        <img
+          [src]="selectedProduct?.image"
+          alt="{{ selectedProduct?.name }}"
+          class="product-image"
+        />
+        <h4
+          style="
+            font-size: 23px;
+            font-weight: bold;
+            margin-top: 17px;
+            margin-bottom: 17px;
+          "
+        >
+          {{ selectedProduct?.name }}
+          <span style="color: red">({{ selectedProduct?.preco }}€)</span>
+        </h4>
+        <hr />
+        <div class="info-row">
+          <p class="info-title">Supermercado:</p>
+          <p class="info-value">{{ selectedProduct?.supermercado }}</p>
+        </div>
+        <hr />
+        <div class="info-row">
+          <p class="info-title">Quantidade:</p>
+          <div class="quantity-controls">
+            <ion-button size="small" (click)="decrementQuantity()"
+              >-</ion-button
+            >
+            <ion-input
+              type="number"
+              min="1"
+              [(ngModel)]="selectedProduct.quantity"
+              inputmode="numeric"
+            ></ion-input>
+            <ion-button size="small" (click)="incrementQuantity()"
+              >+</ion-button
+            >
+          </div>
+        </div>
+        <hr />
+        <div class="info-row">
+          <p class="info-title">Lista:</p>
+          <ion-select [(ngModel)]="selectedList" class="modal-value">
+            <ion-select-option *ngFor="let list of lists" [value]="list.id">
+              {{ list.name }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        <div class="modal-buttons">
+          <ion-button color="success" (click)="addProductToList()"
+            >✔</ion-button
+          >
+          <ion-button color="danger" (click)="closeModal()">✖</ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>
+
+<style>
+  hr {
+    border: 2px gray solid;
+    border-radius: 1px;
+    opacity: 25%;
+  }
+  .center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  ion-segment {
+    margin: 16px;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  ion-segment-button {
+    white-space: nowrap;
+    flex: 0 0 auto;
+    padding: 0 12px;
+  }
+
+  .category-button {
+    min-width: 40px; /* Adjust the minimum width as needed */
+    margin-right: 10px; /* Increase space between category buttons */
+  }
+
+  .horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    padding: 16px;
+  }
+
+  .product-container {
+    flex: 0 0 auto;
+    margin: 8px;
+  }
+
+  .product-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  ion-card {
+    display: inline-block;
+  }
+
+  .modal-title {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-weight: bold;
+    font-size: 25px;
+  }
+
+  .modal-wrapper {
+    padding: 16px;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+  }
+
+  .modal-wrapper img.product-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 25px;
+  }
+
+  .modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 16px;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 17px;
+    margin-bottom: 17px;
+  }
+
+  .info-title {
+    flex: 1;
+    text-align: left;
+  }
+
+  .info-value {
+    flex: 1;
+    text-align: right;
+  }
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+  }
+
+  .quantity-controls ion-button {
+    margin: 0;
+  }
+
+  ion-input {
+    margin: 0 5px;
+    text-align: center;
+    max-width: 50px; /* Ensures the input doesn't get too wide */
+  }
+
+  ion-select.modal-value {
+    width: auto;
+    flex-grow: 1;
+    --padding-start: 0;
+    text-align: left;
+  }
+
+  ion-select::part(text) {
+    text-align: left;
+    padding-right: -90px; /* Ensures the text does not overlap with the arrows */
+  }
+</style>

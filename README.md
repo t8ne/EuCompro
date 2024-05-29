@@ -2,7 +2,7 @@
 
 Siga estas etapas para configurar o projeto na sua máquina local.
 
-## Prérequisitos
+## Pré-Requisitos
 
 Certifique-se de ter o Node.js e o npm instalados. Pode baixá-los e instalá-los em [Node.js](https://nodejs.org/).
 

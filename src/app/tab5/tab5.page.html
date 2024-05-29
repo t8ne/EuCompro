@@ -9,7 +9,116 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar> </ion-toolbar>
-  </ion-header>
+  <div class="search-container">
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="filterItems($event)"
+      placeholder="Pesquisar por produtos para comparar"
+      (ionClear)="clearSearch()"
+    ></ion-searchbar>
+  </div>
+
+  <div *ngIf="recentSearches.length > 0" class="recent-searches">
+    <h2>Pesquisado recentemente</h2>
+    <ion-list>
+      <ion-item *ngFor="let search of recentSearches">
+        <ion-label>{{ search }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="searchResults.length > 0" class="search-results">
+    <ion-list>
+      <ion-item
+        *ngFor="let result of searchResults"
+        (click)="selectItem(result)"
+      >
+        <ion-label>{{ result.name }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="selectedProduct" class="comparison-container">
+    <h2 class="productName">{{ selectedProduct.name }}</h2>
+    <div class="comparison">
+      <div class="store">
+        <h3 class="randomStore">{{ randomStore1 }}</h3>
+        <img [src]="selectedProduct.image" alt="{{ selectedProduct.name }}" />
+        <p class="discount">{{ selectedProduct.preco }}€</p>
+      </div>
+      <div class="vs">VS</div>
+      <div class="store">
+        <h3 class="randomStore">{{ randomStore2 }}</h3>
+        <img [src]="selectedProduct.image" alt="{{ selectedProduct.name }}" />
+        <p class="discount">{{ discountedPrice }}€</p>
+        <p class="discount">(-{{ priceDifference }}€)</p>
+      </div>
+    </div>
+  </div>
 </ion-content>
+<style>
+  .productName {
+    font-size: 25px;
+    margin-bottom: 30px; /* Remove default margin */
+    align-self: center;
+    font-weight: bold;
+  }
+
+  .randomStore {
+    font-size: 20px;
+    margin-bottom: 15px; /* Remove default margin */
+    align-self: center;
+    font-weight: bold;
+  }
+
+  .search-container {
+    padding: 16px;
+  }
+
+  .recent-searches,
+  .search-results {
+    padding: 16px;
+  }
+
+  .comparison-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .comparison {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the start to keep them at the top */
+  }
+
+  .store {
+    margin: 0 20px;
+    text-align: center;
+  }
+
+  .store img {
+    width: 150%;
+    height: 150%;
+    border-radius: 15px;
+    margin-bottom: 10px;
+  }
+
+  .vs {
+    font-size: 24px;
+    margin: 0 20px;
+    align-self: center;
+    color: red;
+    font-weight: bold;
+  }
+
+  .store p {
+    margin: 0; /* Remove default margin */
+  }
+
+  .discount {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 16px;
+    color: red;
+  }
+</style>
