@@ -10,6 +10,9 @@
     "
   >
     <ion-buttons slot="end">
+      <ion-button routerLink="/notificacoes">
+      <ion-icon class = "notificacoes" name="notifications-circle-outline"></ion-icon>
+    </ion-button>
       <ion-button routerLink="/settings">
         <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
       </ion-button>
@@ -94,7 +97,7 @@
           name="storefront-outline"
           slot="start"
           style="
-            color: green;
+            color: purple;
             -border-color: rgba(189, 189, 189, 0.338);
             margin-top: 20px;
           "
@@ -131,6 +134,11 @@
 
   .content-container {
     padding: 16px;
+  }
+
+  .notificacoes {
+    height:30px;
+    width:30px;
   }
 
   .recommendation-title {
