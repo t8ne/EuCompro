@@ -1,16 +1,15 @@
 <ion-header [translucent]="true" class="no-border-android">
-  <ion-title style="font-weight: bold; text-align: center; margin-top: 2%">
-    Início
-  </ion-title>
-  <ion-toolbar
+  <ion-title
     style="
-      --border-width: 0;
-      --ion-border-color: transparent;
-      --box-shadow: none;
-      box-shadow: none;
-      border: none;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 2%;
+      color: rgb(209, 209, 209);
     "
   >
+    Início
+  </ion-title>
+  <ion-toolbar style="--border-width: 0">
     <ion-buttons slot="end">
       <ion-button routerLink="/notificacoes">
         <ion-icon
@@ -139,11 +138,6 @@
 
   .content-container {
     padding: 16px;
-  }
-
-  .notificacoes {
-    height: 30px;
-    width: 30px;
   }
 
   .recommendation-title {

@@ -35,3 +35,16 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+ion-segment {
+    --background: transparent;
+    --indicator-color: #3C3C3C; /* Background color of selected segment */
+    --color: #343434; /* Text color for non-selected segments */
+    --color-checked: #000000; /* Text color for selected segment */
+  }
+  
+  ion-segment-button {
+    --color: #343434; /* Text color for non-selected segments */
+    --color-checked: #000000; /* Text color for selected segment */
+    --background: transparent;
+  }

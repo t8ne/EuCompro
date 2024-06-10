@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChildren, QueryList, AfterViewInit } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListService } from '../services/list.service';
 import { IonItemSliding, AlertController, ToastController } from '@ionic/angular';
-import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
@@ -104,17 +104,16 @@ export class ListaPage implements OnInit, AfterViewInit {
 
   async openCamera() {
     try {
-      const status = await BarcodeScanner.checkPermissions();
-      if (status.camera !== 'granted') {
-        const result = await BarcodeScanner.requestPermissions();
-        if (result.camera !== 'granted') {
-          return;
-        }
-      }
-      const result = await BarcodeScanner.scan();
-      // Process the barcode result if needed
+      const photo = await Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Camera,
+        quality: 100
+      });
+
+      // Process the photo if needed
+      console.log('Photo taken:', photo);
     } catch (error) {
-      console.error('Erro de Código de Barras: ', error);
+      console.error('Erro ao abrir a câmera:', error);
     }
   }
 
@@ -144,8 +143,7 @@ export class ListaPage implements OnInit, AfterViewInit {
     });
 
     await alert.present();
-}
-
+  }
 
   async showToast(message: string) {
     const toast = await this.toastController.create({
